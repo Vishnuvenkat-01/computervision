@@ -1,0 +1,58 @@
+# Python & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Distribution / Packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE & Editor Configs
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Large Model Weights (Keep documentation, ignore downloaded weights)
+models/*.pt
+!models/README.md
+
+# Video data & generated outputs (Keep directory structure via .gitkeep)
+outputs/snapshots/*/*
+!outputs/snapshots/*/.gitkeep
+outputs/reports/*.csv
+!outputs/reports/.gitkeep
+outputs/processed_videos/*
+!outputs/processed_videos/.gitkeep
+data/sample_videos/*
+!data/sample_videos/.gitkeep
+data/*.mp4
+data/*.mov
+data/*.avi

@@ -1,0 +1,50 @@
+# GateID Vision - System Configuration File
+# HackZen 2.0 Hackathon Project
+
+system:
+  project_name: "GateID Vision"
+  subtitle: "AI-Powered Campus Entry Monitoring System"
+  version: "1.0.0"
+  device: "auto" # "auto", "cpu", "cuda", or "mps" for Apple Silicon / M-series
+
+models:
+  person_detector:
+    model_name: "yolov8n.pt" # Ultralytics pretrained model for persons
+    confidence_threshold: 0.45
+    iou_threshold: 0.50
+    classes: [0] # Class 0 in COCO is person
+    tracker_type: "bytetrack.yaml" # Built-in Ultralytics ByteTrack config
+
+  id_card_detector:
+    model_path: "models/id_card_detector.pt" # Custom trained YOLO weights
+    confidence_threshold: 0.40
+    iou_threshold: 0.45
+    enabled_fallback: true # If model missing, operate gracefully with warning
+
+processing:
+  frame_stride: 2 # Process every Nth frame to optimize throughput (1 = every frame)
+  max_processing_resolution: [1280, 720] # Resize input frame if larger, maintaining aspect ratio
+  minimum_observation_frames: 15 # Frames a person must be tracked before non-detection is flagged
+  blur_threshold_variance: 60.0 # Laplacian variance under which frame is flagged as blurry/uncertain
+  edge_boundary_margin: 0.05 # Margin ratio (5% from edge) where person is marked as clipped/uncertain
+
+association:
+  # Geometric boundaries relative to person bounding box (x1, y1, x2, y2)
+  # Torso is typically the upper body / chest area
+  torso_y_min_ratio: 0.15 # 15% from top of person box (below head)
+  torso_y_max_ratio: 0.65 # 65% from top of person box (waist/chest area)
+  torso_x_margin_ratio: 0.10 # 10% lateral tolerance
+  ambiguity_iou_threshold: 0.20 # If card overlaps multiple torsos with >= this IoU, flag ambiguous
+
+event_capture:
+  cooldown_seconds: 3.0 # Min cooldown between snapshots of same person in same state
+  max_snapshots_per_person: 2 # Cap to avoid disk flooding
+  storage_directory: "outputs/snapshots"
+  save_crop: true # Save localized crop alongside full frame
+  format: "jpg"
+  jpeg_quality: 90
+
+output:
+  video_codec: "mp4v" # "mp4v" (universal fallback) or "avc1" / "H264"
+  reports_directory: "outputs/reports"
+  processed_videos_directory: "outputs/processed_videos"

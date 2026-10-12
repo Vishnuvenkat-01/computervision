@@ -1,0 +1,20 @@
+# GateID Vision - Core Dependencies
+# Python 3.10+ / 3.11 compatible
+# Compatible with Apple Silicon (MPS / M1/M2/M3/M4), CUDA, and CPU
+
+# Web Interface & Dashboard
+streamlit>=1.32.0
+
+# Computer Vision & Deep Learning
+ultralytics>=8.1.0
+opencv-python>=4.8.0.76
+pillow>=10.2.0
+
+# Scientific & Data Processing
+numpy>=1.24.3
+pandas>=2.1.0
+pyyaml>=6.0.1
+
+# Automated Testing
+pytest>=7.4.0
+pytest-mock>=3.12.0
